@@ -103,11 +103,6 @@ for placa in listaPlacas:
     print(text + ' ' + placa.nome)
 
 
-    c 
-
-
-
-
 
 
 

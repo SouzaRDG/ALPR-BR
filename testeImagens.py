@@ -39,17 +39,18 @@ image = cv2.imread('placas/images/01.jpg')
 
 imgGray = cv2.cvtColor(image,cv2.COLOR_RGB2GRAY)
 imgAltoCon = altoCont(imgGray)
+imgBlur = cv2.blur(imgAltoCon, (7, 7) )
 # _ ,imgThresh = cv2.threshold(imgAltoCon, 135 ,255,cv2.THRESH_BINARY_INV,cv2.THRESH_OTSU )
-_ ,imgThresh = cv2.threshold(imgAltoCon, 135 ,255,cv2.THRESH_BINARY_INV,cv2.THRESH_OTSU )
+_ ,imgThresh = cv2.threshold(imgBlur, 110 ,255,cv2.THRESH_BINARY_INV,cv2.THRESH_OTSU )
 _ ,imgThresh2 = cv2.threshold(imgThresh, 180 ,255,cv2.THRESH_BINARY, cv2.ADAPTIVE_THRESH_GAUSSIAN_C)
-kernel = cv2.getStructuringElement(cv2.MORPH_DILATE, ( 2 , 2 ))
-imgDilated = cv2.dilate(imgThresh2,kernel, iterations = 1)
+kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, ( 3 , 3 ))
+imgDilated = cv2.dilate(imgThresh,kernel, iterations = 3)
 contours, _ = cv2.findContours(imgDilated,cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
 
 
 listaPlacas = list()
 
-for  contour in contours:
+for contour in contours:
     [x,y,w,h] = cv2.boundingRect(contour)
     if h>130 and w>130:
          continue
@@ -75,9 +76,9 @@ for placa in listaPlacas:
     # cv2.imshow(placa.nome,placa.image)
 
     # make small details dissapear
-    result = cv2.dilate(placa.image, np.ones((5, 5), np.uint8), iterations=2)
+    result = cv2.dilate(placa.image, np.ones((5, 5), np.uint8), iterations=1)
     # those which weren't that small are back but there are less of them
-    result = cv2.erode(result, np.ones((5, 5), np.uint8), iterations=6)
+    result = cv2.erode(result, np.ones((5, 5), np.uint8), iterations=2)
 
     result = cv2.Canny(result, 80, 255, apertureSize=3, L2gradient=True)
 

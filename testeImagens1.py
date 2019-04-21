@@ -77,23 +77,21 @@ for contour in contours:
 
 for placa in listaPlacas:
 
-    # cv2.imwrite(placa.nome + '.png', placa.image)
+    cv2.imwrite(placa.nome + '.png', placa.image)
 
 
-    placa.image = altoCont(placa.image)
     placa.image = cv2.cvtColor(placa.image, cv2.COLOR_RGB2GRAY)
-    placa.image = altoCont(placa.image)
 
-    _ , placa.image = cv2.threshold(placa.image, 150 ,255, cv2.THRESH_OTSU , cv2.THRESH_BINARY_INV)
+    _ , placa.image = cv2.threshold(placa.image, 180 ,255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C)
     cv2.imshow("x", placa.image)
 
     # those which weren't that small are back but there are less of them
-    placa.image = cv2.erode(placa.image, np.ones((5, 5), np.uint8), iterations=2)
+    placa.image = cv2.erode(placa.image, np.ones(( 5 , 4), np.uint8), iterations=5)
     # make small details disapear
-    placa.image = cv2.dilate(placa.image, np.ones((5, 5), np.uint8), iterations=6)
+    placa.image = cv2.dilate(placa.image, np.ones((4 , 6), np.uint8), iterations=2)
 
 
-    placa.image = cv2.Canny(placa.image , 200, 255, apertureSize = 3, L2gradient=True)
+    placa.image = cv2.Canny(placa.image , 230, 255, apertureSize = 3, L2gradient=True)
 
 
 
@@ -104,6 +102,7 @@ for placa in listaPlacas:
 
 
     cv2.imshow(placa.nome,placa.image)
+
 
     text = ocr.image_to_string(placa.image, "charplaca")
     print(text + ' ' + placa.nome)

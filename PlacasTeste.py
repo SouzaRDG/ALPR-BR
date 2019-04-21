@@ -11,7 +11,7 @@ class PlacasTeste:
         self.y = y
         self.w = w
         self.h = h
-        self.nome = f'Placa {PlacasTeste.numPlacas + 1}'
+        self.nome = f'Placa{PlacasTeste.numPlacas + 1}'
         self.image = image
 
         PlacasTeste.numPlacas +=1

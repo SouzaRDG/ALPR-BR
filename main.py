@@ -6,15 +6,19 @@ if not alpr.is_loaded():
     print("Error loading OpenALPR")
     sys.exit(1)
 
-alpr.set_top_n(20)
+alpr.set_top_n(200)
 # alpr.set_default_region("md")
 
-results = alpr.recognize_file("placas/07.jpg")
-image = cv2.imread('placas/07.jpg')
+results = alpr.recognize_file("placas/03.jpg")
+image = cv2.imread('placas/03.jpg')
 cv2.imshow("pla", image)
 
 i = 0
+placa = ""
+
 for plate in results['results']:
+
+
     i += 1
     print("Plate #%d" % i)
     print("   %12s %12s" % ("Plate", "Confidence"))
@@ -32,7 +36,7 @@ for plate in results['results']:
             confianca = candidate['confidence']
             break
 
-print(placa + "  " )
+print(placa)
 
 # Call when completely done to release memory
 alpr.unload()

@@ -1,4 +1,5 @@
 from openalpr import Alpr
+import re
 import cv2
 
 alpr = Alpr( "br", "/etc/openalpr/openalpr.conf", "/home/souzardg/openalpr/runtime_data")
@@ -31,7 +32,13 @@ for plate in results['results']:
 
         teste = candidate['plate']
 
-        if( teste[0].isalpha() & teste[1].isalpha() & teste[2].isalpha() & teste[3].isdigit() & teste[4].isdigit() & teste[5].isdigit() & teste[6].isdigit()):
+        # if( teste[0].isalpha() & teste[1].isalpha() & teste[2].isalpha() & teste[3].isdigit() & teste[4].isdigit() & teste[5].isdigit() & teste[6].isdigit()):
+        #     placa = candidate['plate']
+        #     confianca = candidate['confidence']
+        #     break
+
+        x = re.search('^[A-Z]{3}[0-9]{4}',teste)
+        if(x):
             placa = candidate['plate']
             confianca = candidate['confidence']
             break

@@ -12,14 +12,14 @@ base = mysql.connect(host = '127.0.0.1', user='root', password='Senh@123', datab
 
 # criaTable()
 
-def pesquisaProprietario():
+def pesquisaProprietario(cpf):
 
     con = base.cursor()
-    con.execute('SELECT * FROM PESSOAS where NOME = "rodrigo"')
+    con.execute('SELECT * FROM PESSOAS where CPF = %s', (cpf))
 
     try:
         resultado = con.fetchone()
-        print(f"{resultado[0]}, {resultado[1]}")
+        print(f"Proprietário -> {resultado[0]} \n                CPF:{resultado[1]} RG:{resultado[2]}")
     except:
         print("deu ruim")
 
@@ -33,10 +33,10 @@ def pesquisaPlaca(placa):
 
     try:
         resultado = con.fetchone()
-        print(f'Veiculo -> {resultado[2]} {resultado[1]} {resultado[3]} Placa: {resultado[0]} \n {resultado[5]} ')
+        print(f'Veiculo ->      {resultado[2]} {resultado[1]} {resultado[3]}\n                Placa: {resultado[0]} ')
+        pesquisaProprietario(resultado[5])
+
     except:
-        print('seu ruim2')
+        print('deu ruim2')
 
 # pesquisaPlaca('GJA5809')
-
-

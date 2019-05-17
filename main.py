@@ -3,7 +3,6 @@ import re
 import cv2
 import bdConnection
 
-print("comecou")
 
 alpr = Alpr("br", "/etc/openalpr/openalpr.conf", "/home/souzardg/openalpr/runtime_data")
 if not alpr.is_loaded():
@@ -13,9 +12,9 @@ if not alpr.is_loaded():
 alpr.set_top_n(200)
 # alpr.set_default_region("md")
 
-results = alpr.recognize_file("placas/03.jpg")
-image = cv2.imread('placas/01.jpg')
-# cv2.imshow("pla", image)
+results = alpr.recognize_file("placas/05.jpg")
+image = cv2.imread('placas/05.jpg')
+cv2.imshow("pla", image)
 
 i = 0
 placa = ""

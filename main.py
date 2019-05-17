@@ -1,8 +1,11 @@
 from openalpr import Alpr
 import re
 import cv2
+import bdConnection
 
-alpr = Alpr( "br", "/etc/openalpr/openalpr.conf", "/home/souzardg/openalpr/runtime_data")
+print("comecou")
+
+alpr = Alpr("br", "/etc/openalpr/openalpr.conf", "/home/souzardg/openalpr/runtime_data")
 if not alpr.is_loaded():
     print("Error loading OpenALPR")
     sys.exit(1)
@@ -11,11 +14,12 @@ alpr.set_top_n(200)
 # alpr.set_default_region("md")
 
 results = alpr.recognize_file("placas/03.jpg")
-image = cv2.imread('placas/03.jpg')
-cv2.imshow("pla", image)
+image = cv2.imread('placas/01.jpg')
+# cv2.imshow("pla", image)
 
 i = 0
 placa = ""
+
 
 for plate in results['results']:
 
@@ -40,10 +44,11 @@ for plate in results['results']:
         x = re.search('^[A-Z]{3}[0-9]{4}',teste)
         if(x):
             placa = candidate['plate']
-            confianca = candidate['confidence']
             break
 
 print(placa)
+
+bdConnection.pesquisaPlaca(placa)
 
 # Call when completely done to release memory
 alpr.unload()

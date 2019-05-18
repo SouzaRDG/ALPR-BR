@@ -14,7 +14,7 @@ alpr.set_top_n(200)
 
 results = alpr.recognize_file("placas/05.jpg")
 image = cv2.imread('placas/05.jpg')
-cv2.imshow("pla", image)
+# cv2.imshow("pla", image)
 
 i = 0
 placa = ""

@@ -1,5 +1,19 @@
 # ALPR-BR
-Brazilian ALPR using Python and OPENALPR
+
+Brazilian ALPR using Python, OPENALPR and verifying the plate on a API
+
+Links to their repositories:
+
+
+https://github.com/openalpr/openalpr - OpenALPR
+https://github.com/victor-torres/sinesp-client - SINESP Client
+
+Right now it only work with images, but I plan to add video/cam suport soon.
+Modify bdConnection to match your database (now i'm thinking, 
+maybe i souldve used the name dbConnection, but anyways...)
+
+
+___________________________OLD__________________________________
 
 At first i was using tesseract ocr, but since i was unable to preprocess the images
 correctly to use it in a wide gamma of images, i started looking for other tools to do

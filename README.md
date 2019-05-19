@@ -12,6 +12,8 @@ Right now it only work with images, but I plan to add video/cam suport soon.
 Modify bdConnection to match your database (now i'm thinking, 
 maybe i souldve used the name dbConnection, but anyways...)
 
+by the way 'testeImagens' and 'PlacasTeste' are useless, dont bother reading it
+
 
 ___________________________OLD__________________________________
 

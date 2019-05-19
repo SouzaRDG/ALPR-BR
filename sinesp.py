@@ -2,7 +2,7 @@ from sinesp_client import SinespClient
 import urllib3
 urllib3.disable_warnings()
 
-# # Teste
+# # Teste rápido para verificar se esta funcionando
 #
 # sc = SinespClient()
 # result = sc.search('PDX6897')
@@ -12,13 +12,10 @@ urllib3.disable_warnings()
 # #  Sem roubo ADV4566
 # #  Roubado PDX6897
 #
-# print(result)
+# print(result)  # retorna todos os dados
 #
-# print(result["status_message"])
+# print(result["status_message"])   # retorna apenas o status de roubo
 
-
-
-##############                TESTAR (SINESP ESTA FORA DO AR NO MOMENTO)
 
 def pesquisaSituacao(placa):
 
@@ -26,26 +23,36 @@ def pesquisaSituacao(placa):
 
         sc = SinespClient()
         resultado = sc.search(placa)
-        print(resultado['status_message'])
-        print(resultado)
 
-        if(resultado['return_code'] == 1):
-            print('Placa inválida')
-        elif(resultado['status_code'] == 1):
-            print('*-* ATENÇÃO *-*\n\n'
-                'O veículo está marcado como roubado/furtado segundo o SINESP\n'
-                'Fique atento e chame as autoridades competentes')
+        # print(placa)
+        # print(resultado['status_message'])
+        # print(resultado)
+
+        if(resultado.get('return_code') == '1'):
+            print(f'\nATENÇÃO *-* Placa {placa} inválida *-* \n Possíveis motivos:\n'
+                  '1 - Essa placa não se encontra no servidor da SINESP *-* ATENÇÃO *-*\n'
+                  '2 - A placa não foi identificada corretamente')
+
+        elif(resultado.get('status_code') == '1'):
+            print('\n*-* ATENÇÃO *-*\n'
+                f'O veículo placa {placa} está marcado como roubado/furtado segundo o SINESP\n'
+                'Fique atento e chame as autoridades competentes\n'
+                'EM HIPOTESE NENHUMA TENTE AGIR POR CONTA PRÓPRIA!')
+
         else:
-            print('Veículo regularizado segundo o SINESP\n'
-                  'Fique atento as características do veículo\n'
-                  'DADODADODADODADO AAAAAAAAAADICIONAR DPS CARACTERISTICAS DO VEICULO do servidor SINESP')
+            print(f'\nVeículo placa {placa} regularizado segundo o SINESP\n'
+                  'Fique atento as características do veículo cadastradas no SINESP:\n'
+                  f'{resultado.get("model")} {resultado.get("color")} {resultado.get("model_year")}\n'
+                  f'{resultado.get("plate")} - {resultado.get("city")} - {resultado.get("state")}')
 
     except:
-
-        print('Não foi possível realizar a pesquisa da situação do veículo junto ao SINESP\n'
+        print('\nNão foi possível realizar a pesquisa da situação do veículo junto ao SINESP\n'
               'Possíveis Erros:\n'
-              'Verifique sua conexão com a internet\n'
-              'Confira se não há uma atualização na API\n'
-              'O aplicativo da SINESP pode estar fora do ar no momento')
+              '1 - Verifique sua conexão com a internet\n'
+              '2 - Confira se não há uma atualização na API\n'
+              '3 - O aplicativo da SINESP pode estar fora do ar no momento\n'
+              '4 - O servidor bloqueou seu acesso devido a muitos acessos seguidos.\n'
+              'Nesse caso, o acesso pode se normalizar após algumas horas \n'
+              '(talvez seja necessario limpar o cache)')
 
-pesquisaSituacao('pdx6897')
+# pesquisaSituacao('ADV4566')

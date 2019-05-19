@@ -12,7 +12,7 @@ if not alpr.is_loaded():
 alpr.set_top_n(200)
 # alpr.set_default_region("md")
 
-results = alpr.recognize_file("placas/05.jpg")
+results = alpr.recognize_file("placas/R00.jpg")
 image = cv2.imread('placas/05.jpg')
 # cv2.imshow("pla", image)
 

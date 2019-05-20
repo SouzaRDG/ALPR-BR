@@ -22,28 +22,16 @@ ultimaPlaca = ""
 while (True):
 
     _, frame = video.read()
-    # frame = cv2.flip(frame,1)
     cv2.imshow('camera',frame)
-
     results = alpr.recognize_ndarray(frame)
-
-    # gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)   #### exemplos de como aplicar os filtros abaixo que estou testndo com imagens
-    # cv2.imshow('gray',gray)
-
-    i = 0
     placa = ""
 
 
     for plate in results['results']:
 
-        i += 1
-
         for candidate in plate['candidates']:
 
-            # x = re.search('^[A-Z]{3}[0-9]{4}',teste)
-            # if(x):
             if (re.search('^[A-Z]{3}[0-9]{4}',candidate['plate'])):
-
                 placa = candidate['plate']
                 print(f"  Placa reconhecida {placa}")
                 break

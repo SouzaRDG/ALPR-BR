@@ -12,20 +12,17 @@ if not alpr.is_loaded():
 alpr.set_top_n(200)
 # alpr.set_default_region("md")
 
-
-
-################    TRABALHANDO COM VÍDEOS
+# TRABALHANDO COM ViDEOS
 
 video = cv2.VideoCapture(0)
 ultimaPlaca = ""
+placa = ''
 
 while (True):
 
     _, frame = video.read()
-    cv2.imshow('camera',frame)
+    cv2.imshow('CAM',frame)
     results = alpr.recognize_ndarray(frame)
-    placa = ""
-
 
     for plate in results['results']:
 
@@ -33,7 +30,7 @@ while (True):
 
             if (re.search('^[A-Z]{3}[0-9]{4}',candidate['plate'])):
                 placa = candidate['plate']
-                print(f"  Placa reconhecida {placa}")
+                # print(f"  Placa reconhecida {placa}")
                 break
 
         if((placa != "") & (placa != ultimaPlaca)):

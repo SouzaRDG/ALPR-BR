@@ -1,8 +1,8 @@
 import pymysql as mysql
 import sinesp
 
+base = mysql.connect(host='127.0.0.1', user='root', password='Senh@123', database='ALPR')
 
-base = mysql.connect(host = '127.0.0.1', user='root', password='Senh@123', database='ALPR')
 
 # def criaTable():
 #
@@ -12,13 +12,15 @@ base = mysql.connect(host = '127.0.0.1', user='root', password='Senh@123', datab
 # criaTable()
 
 def pesquisaProprietario(cpf, placa):
-
     con = base.cursor()
     con.execute('SELECT * FROM PESSOAS where CPF = %s', (cpf))
 
     try:
         resultado = con.fetchone()
         print(f"Proprietario -> {resultado[0]} \n                CPF:{resultado[1]} RG:{resultado[2]}\n")
+
+        # abre cancela
+
     except:
         print("\nNão possivel encontrar o proprietario, apesar do veiculo estar cadastrado\n"
               "chame o suporte para verificar possíveis erros no banco de dados...\n"
@@ -26,11 +28,11 @@ def pesquisaProprietario(cpf, placa):
 
         sinesp.pesquisaSituacao(placa)
 
+
 # pesquisaProprietario()
 
 
 def pesquisaPlaca(placa):
-
     con = base.cursor()
     con.execute('SELECT * FROM VEICULOS WHERE PLACA = %s', (placa))
 

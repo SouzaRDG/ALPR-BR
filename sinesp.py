@@ -59,4 +59,5 @@ def pesquisaSituacao(placa):
               'Nesse caso, o acesso pode se normalizar após algumas horas \n'
               '(talvez seja necessario limpar o cache)\n')
 
+
 # pesquisaSituacao('PDX6897')

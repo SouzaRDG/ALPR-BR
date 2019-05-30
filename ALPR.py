@@ -5,51 +5,41 @@ import bdConnection
 
 ###### TRABALHANDO COM ViDEOS
 
-alpr = Alpr("br", "/etc/openalpr/openalpr.conf", "/home/souzardg/openalpr/runtime_data")
-if not alpr.is_loaded():
-    print("Error loading OpenALPR")
-    sys.exit(1)
-
-alpr2 = Alpr("br2", "/etc/openalpr/openalpr.conf", "/home/souzardg/openalpr/runtime_data")
-if not alpr2.is_loaded():
-    print("Error loading OpenALPR")
-    sys.exit(1)
+try:
+    alpr = Alpr("br", "/etc/openalpr/openalpr.conf", "/home/souzardg/openalpr/runtime_data")
+    alpr2 = Alpr("br2", "/etc/openalpr/openalpr.conf", "/home/souzardg/openalpr/runtime_data")
+except:
+    print("Erro ao carregar OpenALPR\n"
+          "Verifique se todos os componentes estão instalados\n")
+    exit()
 
 alpr.set_top_n(200)
 alpr2.set_top_n(200)
-
 video = cv2.VideoCapture(0)
 ultimaPlaca = ""
-placa = ''
+placa = ""
 
 while (True):
 
     _, frame = video.read()
     cv2.imshow('CAM', frame)
+
     results = alpr.recognize_ndarray(frame)
-
     for plate in results['results']:
-
         for candidate in plate['candidates']:
-
             if (re.search('^[A-Z]{3}[0-9]{4}', candidate['plate'])):
                 placa = candidate['plate']
                 break
-
         if ((placa != "") & (placa != ultimaPlaca)):
             ultimaPlaca = placa
             bdConnection.pesquisaPlaca(placa)
 
     resultados = alpr2.recognize_ndarray(frame)
-
     for plate in resultados['results']:
-
         for candidate in plate['candidates']:
-
             if re.search('^[A-Z]{3}[0-9]{4}', re.sub('[\W_]+', '', candidate['plate'])):
                 placa = re.sub('[\W_]+', '', candidate['plate'])
                 break
-
         if ((placa != "") & (placa != ultimaPlaca)):
             ultimaPlaca = placa
             bdConnection.pesquisaPlaca(placa)

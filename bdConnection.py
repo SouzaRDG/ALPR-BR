@@ -43,7 +43,6 @@ def pesquisaPlaca(placa):
         pesquisaProprietario(resultado[5], resultado[0])
 
         # pesquisaProprietario(resultado[5], resultado[0])
-        # abre cancela
 
     except:
         print(f'\nA placa {placa} do veículo não foi encontrada no banco de dados.\n'

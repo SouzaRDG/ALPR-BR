@@ -54,7 +54,7 @@ alpr2.unload()
 
 ##################      TRABALHANDO COM IMAGENS  / Testes
 
-# alpr = Alpr("br2", "/usr/share/openalpr/config/alprd.defaults.conf", "/home/souzardg/openalpr/runtime_data")
+# alpr = Alpr("br", "/usr/share/openalpr/config/alprd.defaults.conf", "/home/souzardg/openalpr/runtime_data")
 # if not alpr.is_loaded():
 #     print("Error loading OpenALPR")
 #     sys.exit(1)
@@ -63,12 +63,12 @@ alpr2.unload()
 #
 #
 # ### Selecione o arquivo da imagem
-# results = alpr.recognize_file("placas/m00.png")
+# results = alpr.recognize_file("placas/00.jpg")
 #
 # ### Caso voce queira ver a imagem mude aqui
-# image = cv2.imread('placas/m00.png')
+# image = cv2.imread('placas/00.jpg')
+# image = cv2.resize(image, (960, 540))                    # Resize image
 # cv2.imshow("imagem", image)
-#
 # i = 0
 # placa = ""
 #

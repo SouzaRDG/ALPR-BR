@@ -1,6 +1,12 @@
 # ALPR-BR
 
-Brazilian ALPR using Python, OPENALPR and verifying the plate on a API
+v0.7
+
+![](alpr.png)
+
+Brazilian ALPR using Python, OPENALPR and verifying the plate on SINESP using a API
+
+https://youtu.be/nKeQNOoKEe4
 
 Links to their repositories:
 
@@ -16,7 +22,7 @@ Moving makes the chance of mistakes higher, resulting in more querys
 to your db, wich results in more querys to Sinesp and can cause a block
 by the SINESP server.
 
-
+Next step - use raspberry py and use it somewhere!
 ___________________________V0.7__________________________________
 
 

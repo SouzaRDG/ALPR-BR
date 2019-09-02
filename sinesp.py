@@ -43,6 +43,11 @@ def pesquisaSituacao(placa):
                   'Fique atento e chame as autoridades competentes\n'
                   'EM HIPOTESE NENHUMA TENTE AGIR POR CONTA PRÓPRIA!\n')
 
+        elif (resultado.get('status_message') in 'None'):
+            print('\n Não foi possível realizar a pesquisa da situação do veículo junto ao SINESP\n'
+                  'Verifique a possibilidade de uma atualizaçao na API SinespClient\n'
+                  'E torça para uma API oficial ser lançada!')
+
         else:
             print(f'\nVeículo placa {placa} regularizado segundo o SINESP\n'
                   'Fique atento as características do veículo cadastradas no SINESP:\n'

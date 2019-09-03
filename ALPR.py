@@ -19,6 +19,11 @@ video = cv2.VideoCapture(0)
 ultimaPlaca = ""
 placa = ""
 
+placeHolder = ""
+placaTeste1 = ""
+placaTeste2 = ""
+placaTeste3 = ""
+
 while (True):
 
     _, frame = video.read()
@@ -28,21 +33,47 @@ while (True):
     for plate in results['results']:
         for candidate in plate['candidates']:
             if (re.search('^[A-Z]{3}[0-9]{4}', candidate['plate'])):
-                placa = candidate['plate']
+                placeHolder = candidate['plate']
                 break
-        if ((placa != "") & (placa != ultimaPlaca)):
-            ultimaPlaca = placa
-            bdConnection.pesquisaPlaca(placa)
-
     resultados = alpr2.recognize_ndarray(frame)
     for plate in resultados['results']:
         for candidate in plate['candidates']:
             if re.search('^[A-Z]{3}[0-9]{4}', re.sub('[\W_]+', '', candidate['plate'])):
-                placa = re.sub('[\W_]+', '', candidate['plate'])
+                placeHolder = re.sub('[\W_]+', '', candidate['plate'])
                 break
-        if ((placa != "") & (placa != ultimaPlaca)):
-            ultimaPlaca = placa
-            bdConnection.pesquisaPlaca(placa)
+
+    if(placeHolder != ""):
+        if(placaTeste1 == ""):
+            placaTeste1 = placeHolder
+            placeHolder = ""
+        elif(placaTeste2 == ""):
+            placaTeste2 = placeHolder
+            placeHolder = ""
+        elif(placaTeste3 == ""):
+            placaTeste3 = placeHolder
+            placeHolder = ""
+    else:
+        placaTeste1 = ""
+        placaTeste2 = ""
+        placaTeste3 = ""
+        placeHolder = ""
+
+    if((placaTeste1 != "") & ((placaTeste1 == placaTeste2) | (placaTeste1 == placaTeste3))):
+        placa = placaTeste1
+        placeHolder = ""
+
+    if((placaTeste2 != "") & (placaTeste2 == placaTeste3)):
+        placa = placaTeste2
+        placeHolder = ""
+
+
+    if ((placa != "") & (placa != ultimaPlaca)):
+        ultimaPlaca = placa
+        placaTeste1 = ""
+        placaTeste2 = ""
+        placaTeste3 = ""
+        bdConnection.pesquisaPlaca(placa)
+        placa = ""
 
     if cv2.waitKey(1) & 0xFF == ord('q'):  #### Aperte 'Q' para fechar
         cv2.destroyAllWindows()

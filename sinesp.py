@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+
 from sinesp_client import SinespClient
 import urllib3
+import arduinoSerial
 
 urllib3.disable_warnings()
 
@@ -34,6 +37,7 @@ def pesquisaSituacao(placa):
                   '1 - Essa placa não se encontra no servidor da SINESP \n*-* ATENÇÃO *-*'
                   'ESSA PLACA PODE SER FALSA!\n'
                   '2 - A placa não foi identificada corretamente\n')
+            arduinoSerial.attentionLED()
 
         elif (resultado.get('status_code') == '1'):
             print('\n*-* ATENÇÃO *-*\n'
@@ -42,11 +46,13 @@ def pesquisaSituacao(placa):
                   f'{resultado.get("plate")} - {resultado.get("city")} - {resultado.get("state")}\n'
                   'Fique atento e chame as autoridades competentes\n'
                   'EM HIPOTESE NENHUMA TENTE AGIR POR CONTA PRÓPRIA!\n')
+            arduinoSerial.warningLED()
 
         elif (resultado.get('status_message') in 'None'):
             print('\n Não foi possível realizar a pesquisa da situação do veículo junto ao SINESP\n'
                   'Verifique a possibilidade de uma atualizaçao na API SinespClient\n'
                   'E torça para uma API oficial ser lançada!')
+            arduinoSerial.attentionLED()
 
         else:
             print(f'\nVeículo placa {placa} regularizado segundo o SINESP\n'
@@ -63,6 +69,8 @@ def pesquisaSituacao(placa):
               '4 - O servidor bloqueou seu acesso devido a muitos acessos seguidos.\n'
               'Nesse caso, o acesso pode se normalizar após algumas horas \n'
               '(talvez seja necessario limpar o cache)\n')
+
+        arduinoSerial.attentionLED()
 
 
 # pesquisaSituacao('PDX6897')

@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+
 import pymysql as mysql
 import sinesp
+import arduinoSerial
 
 base = mysql.connect(host='127.0.0.1', user='root', password='Senh@123', database='ALPR')
 
@@ -19,11 +22,12 @@ def pesquisaProprietario(cpf, placa):
         resultado = con.fetchone()
         print(f"Proprietario -> {resultado[0]} \n                CPF:{resultado[1]} RG:{resultado[2]}\n")
 
+        arduinoSerial.openGate()
         # abre cancela
 
     except:
         print("\nNão possivel encontrar o proprietario, apesar do veiculo estar cadastrado\n"
-              "chame o suporte para verificar possíveis erros no banco de dados...\n"
+              "Chame o suporte para verificar possíveis erros no banco de dados...\n"
               "Verificando a placa no servidor da SINESP...")
 
         sinesp.pesquisaSituacao(placa)

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from openalpr import Alpr
 import re
 import cv2
